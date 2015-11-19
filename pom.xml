@@ -25,9 +25,9 @@
 	</licenses>
 
 	<scm>
-		<connection>scm:git:git@github.com:docker-java/docker-java.git</connection>
-		<url>git@github.com:docker-java/docker-java.git</url>
-		<developerConnection>scm:git:git@github.com:docker-java/docker-java.git</developerConnection>
+		<connection>scm:git:git@github.com:signalfx/docker-java.git</connection>
+		<url>git@github.com:signalfx/docker-java.git</url>
+		<developerConnection>scm:git:git@github.com:signalfx/docker-java.git</developerConnection>
 		<tag>HEAD</tag>
 	</scm>
 
@@ -265,6 +265,16 @@
 							</goals>
 						</execution>
 					</executions>
+                                        <configuration>
+                                                <archive>
+                                                        <manifest>
+                                                                <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                                                        </manifest>
+                                                        <manifestEntries>
+                                                                <Implementation-Build>${buildNumber}</Implementation-Build>
+                                                        </manifestEntries>
+                                                </archive>
+                                         </configuration>
 				</plugin>
 
 				<plugin>
@@ -357,6 +367,24 @@
 					<goals>deploy nexus-staging:release</goals>
 				</configuration>
 			</plugin>
+
+                        <plugin>
+                                <groupId>org.codehaus.mojo</groupId>
+                                <artifactId>buildnumber-maven-plugin</artifactId>
+                                <version>1.4</version>
+                                <executions>
+                                        <execution>
+                                                 <phase>validate</phase>
+                                                 <goals>
+                                                         <goal>create</goal>
+                                                 </goals>
+                                        </execution>
+                                 </executions>
+                                 <configuration>
+                                        <doCheck>false</doCheck>
+                                        <doUpdate>false</doUpdate>
+                                 </configuration>
+                        </plugin>
 
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
